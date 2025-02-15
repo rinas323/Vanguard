@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanguard - Disaster Management Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Navbar with blur effect -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <i class="bx bx-shield-quarter"></i>
+                <span>Vanguard</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#dashboard">
+                            <i class="bx bxs-dashboard"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#alerts">
+                            <i class="bx bxs-bell"></i> Alerts
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#resources">
+                            <i class="bx bxs-box"></i> Resources
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacts">
+                            <i class="bx bxs-contact"></i> Contacts
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid px-4 mt-4">
+        <!-- Alert Banner -->
+        <div class="alert-banner"></div>
+
+        <div class="row g-4 mt-2">
+            <!-- Quick Stats -->
+            <div class="col-12">
+                <div class="row g-4">
+                    <div class="col-md-3">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="bx bxs-home text-primary fs-3 me-2"></i>
+                                    <h6 class="card-subtitle mb-0">Active Relief Camps</h6>
+                                </div>
+                                <h2 class="card-title mb-0">24</h2>
+                                <div class="progress mt-3">
+                                    <div class="progress-bar bg-primary" style="width: 70%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="bx bxs-group text-success fs-3 me-2"></i>
+                                    <h6 class="card-subtitle mb-0">People in Camps</h6>
+                                </div>
+                                <h2 class="card-title mb-0">1,248</h2>
+                                <div class="progress mt-3">
+                                    <div class="progress-bar bg-success" style="width: 45%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="bx bxs-error text-warning fs-3 me-2"></i>
+                                    <h6 class="card-subtitle mb-0">Active Alerts</h6>
+                                </div>
+                                <h2 class="card-title mb-0">3</h2>
+                                <div class="progress mt-3">
+                                    <div class="progress-bar bg-warning" style="width: 30%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="bx bxs-truck text-info fs-3 me-2"></i>
+                                    <h6 class="card-subtitle mb-0">Resources Deployed</h6>
+                                </div>
+                                <h2 class="card-title mb-0">85%</h2>
+                                <div class="progress mt-3">
+                                    <div class="progress-bar bg-info" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map Section -->
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Interactive Map</h5>
+                        <div id="map" style="height: 500px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alert System -->
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Live Alerts</h5>
+                        <div class="alerts-container">
+                            <div class="alert alert-danger">
+                                <strong>High Alert:</strong> Heavy rainfall expected in Idukki district
+                            </div>
+                            <div class="alert alert-warning">
+                                <strong>Warning:</strong> Possible flooding in low-lying areas of Alappuzha
+                            </div>
+                            <div class="alert alert-info">
+                                <strong>Update:</strong> Relief camp established at Kottayam Town Hall
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resource Availability -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Resource Availability</h5>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Resource</th>
+                                        <th>Location</th>
+                                        <th>Status</th>
+                                        <th>Capacity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Helipad</td>
+                                        <td>Thiruvananthapuram</td>
+                                        <td><span class="badge bg-success">Operational</span></td>
+                                        <td>2 Aircraft</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ICP Alpha</td>
+                                        <td>Kochi</td>
+                                        <td><span class="badge bg-success">Active</span></td>
+                                        <td>Full Staff</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Medical Camp</td>
+                                        <td>Kozhikode</td>
+                                        <td><span class="badge bg-warning">Limited</span></td>
+                                        <td>75%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stock Levels -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Relief Camp Stock Levels</h5>
+                        <div class="stock-bars">
+                            <div class="mb-3">
+                                <label>Food Supplies</label>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" style="width: 85%">85%</div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label>Water</label>
+                                <div class="progress">
+                                    <div class="progress-bar bg-info" style="width: 70%">70%</div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label>Medical Supplies</label>
+                                <div class="progress">
+                                    <div class="progress-bar bg-warning" style="width: 45%">45%</div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label>Emergency Kits</label>
+                                <div class="progress">
+                                    <div class="progress-bar bg-danger" style="width: 30%">30%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Signup -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Stay Informed</h5>
+                        <p>Register for emergency alerts and updates</p>
+                        <form class="row g-3">
+                            <div class="col-md-4">
+                                <input type="email" class="form-control" placeholder="Email Address">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="tel" class="form-control" placeholder="Mobile Number">
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary w-100">Subscribe to Alerts</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
