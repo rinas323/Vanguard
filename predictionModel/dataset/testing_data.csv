@@ -1,0 +1,3 @@
+id,rainfall_day1,soiltype_day1,wind_day1,geostruct_day1,rainfall_day2,soiltype_day2,wind_day2,geostruct_day2,rainfall_day3,soiltype_day3,wind_day3,geostruct_day3,flood_prone,landslide_prone
+101,11.0,1,4.5,0.7,9.5,2,5.2,0.8,7.8,1,4.0,0.6,1,0
+102,8.5,2,3.9,0.5,7.8,1,4.1,0.6,6.2,2,3.8,0.7,0,1
